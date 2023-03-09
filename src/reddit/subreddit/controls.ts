@@ -20,6 +20,7 @@ import type {
 import type { BannedUser } from "../user/moderator-actioned/banned";
 import type { ModeratorActionedUser } from "../user/moderator-actioned/base";
 import type { SubredditData } from "./object";
+import type { SearchSubredditsOptions } from "./types";
 
 import { BaseControls } from "../base-controls";
 import { CommentListing } from "../comment/listing/listing";
@@ -799,6 +800,31 @@ export class SubredditControls extends BaseControls {
     syntax: SearchSyntax = "plain"
   ): Listing<Post> {
     return this.client.posts.search(query, subreddit, time, sort, syntax, true);
+  }
+
+  /**
+   * Search subreddits by title and description.
+   *
+   * @param options The search options.
+   */
+  searchSubreddits(options: SearchSubredditsOptions): Listing<Subreddit> {
+    const { query: q, sort = "relevance", includeNsfw, ...rest } = options;
+    const query: Query = {
+      q,
+      sort,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      sr_detail: true,
+      ...rest,
+    };
+    if (includeNsfw) {
+      query.include_over_18 = "on";
+    }
+    const request = {
+      url: `subreddits/search`,
+      query,
+    };
+    const context = { request, client: this.client };
+    return new SubredditListing(fakeListingAfter(""), context);
   }
 
   /**
