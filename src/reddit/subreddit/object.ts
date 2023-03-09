@@ -154,10 +154,18 @@ export interface SubredditData extends ContentData {
   /** Whether or not ads are hidden in this subreddit. */
   hideAds: boolean;
 
-  // TODO: Document or remove SubredditData.icon*
-  // Are these redundant due to communityIcon, or are they actually different?
-  // iconImg: string;
-  // iconSize: Maybe<Size>;
+  /**
+   * The legacy URL of the icon for this subreddit.
+   *
+   * It is prefered to use the newer {@link communityIcon} if available and
+   * only use this one as a fallback.
+   */
+  iconImg: Maybe<string>;
+
+  /**
+   * The size of {@link iconImg}.
+   */
+  iconSize: Maybe<Size>;
 
   // TODO: Document or remove SubredditData.is*
   // isChatPostFeatureEnabled: boolean,
@@ -372,8 +380,8 @@ export class Subreddit extends Content implements SubredditData {
   headerSize: Maybe<Size>;
   headerTitle: Maybe<string>;
   hideAds: boolean;
-  // iconImg: string;
-  // iconSize: Maybe<Size>;
+  iconImg: Maybe<string>;
+  iconSize: Maybe<Size>;
   // isChatPostFeatureEnabled: boolean,
   // isCrosspostableSubreddit: boolean,
   // isEnrolledInNewModmail: boolean,
@@ -472,8 +480,8 @@ export class Subreddit extends Content implements SubredditData {
     this.headerSize = data.headerSize;
     this.headerTitle = data.headerTitle;
     this.hideAds = data.hideAds;
-    // this.iconImg = data.iconImg;
-    // this.iconSize = data.iconSize;
+    this.iconImg = data.iconImg;
+    this.iconSize = data.iconSize;
     // this.isChatPostFeatureEnabled = data.isChatPostFeatureEnabled;
     // this.isCrosspostableSubreddit = data.isCrosspostableSubreddit;
     // this.isEnrolledInNewModmail = data.isEnrolledInNewModmail;

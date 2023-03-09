@@ -224,6 +224,11 @@ export interface PostData extends LockableData {
   upvoteRatio: number;
 
   /**
+   * The number of upvotes on this post.
+   */
+  ups: number;
+
+  /**
    * The URL of this post.
    *
    * If this is a link post `url` will be that link. Otherwise it will be the
@@ -295,6 +300,7 @@ export class Post extends Lockable implements PostData {
   // thumbnailHeight?: number;
   // thumbnailWidth?: number;
   title: string;
+  ups: number;
   upvoteRatio: number;
   url: string;
   // viewCount: Maybe<number>;
@@ -356,6 +362,7 @@ export class Post extends Lockable implements PostData {
     // this.thumbnailHeight = data.thumbnailHeight;
     // this.thumbnailWidth = data.thumbnailWidth;
     this.title = data.title;
+    this.ups = data.ups;
     this.upvoteRatio = data.upvoteRatio;
     this.url = data.url;
     // this.viewCount = data.viewCount;
